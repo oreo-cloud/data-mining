@@ -12,7 +12,10 @@ columns_to_drop = columns_to_drop_1 + columns_to_drop_2 + ['Number']
 
 train = train.drop(columns=columns_to_drop, errors='ignore')
 test = test.drop(columns=columns_to_drop, errors='ignore')
-# train.dropna(inplace=True)
+
+# train.fillna(0, inplace=True) # 使用 0 填補缺失值
+# test.fillna(0, inplace=True) # 使用 0 填補缺失值
+
 train.fillna(train.mean(), inplace=True) # 使用平均值填補缺失值
 test.fillna(test.mean(), inplace=True) # 使用平均值填補缺失值
 
@@ -35,6 +38,7 @@ model.fit(X_train, y_train)
 # 預測測試集
 y_pred = model.predict(test)
 
+# 控制輸出格式
 predictions_df = pd.DataFrame(y_pred, columns=target_columns)
 results = pd.concat([predictions_df], axis=1)
 
